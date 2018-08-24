@@ -1,145 +1,112 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Aug 22 14:10:55 2018
+Created on Fri Aug 24 16:52:05 2018
 
 @author: jonaswillmann
 """
 
-import numpy as np
 import sys
+import numpy as np
 import scipy
 import scipy.linalg
-fname = "infinit_potential_well.inp"
 
 
-def input_schroed(fname):
-    """import input file and test if file exists"""
+def solver(fn):
+    '''import parameters and solve the one-dimensional time-independent
+    Schrödinger equation'''
+    # import input file and test if file exists
     try:
-        inp_all = open(fname, 'r')
+        inp_all = open(fn, 'r')
     except FileNotFoundError:
-        print("Input file {} not found".format(fname))
+        print("Input file {} not found".format(fn))
         sys.exit(1)
     else:
-        inp_all = open(fname, 'r')
-        return inp_all
+        inp_all = open(fn, 'r')
 
+    # import parameters from input file
+    lines = inp_all.readlines()
+    inp_mass = lines[0].split()[0]
+    mass = float(inp_mass)
+    inp_xmin = lines[1].split()[0]
+    xmin = float(inp_xmin)
+    inp_xmax = lines[1].split()[1]
+    xmax = float(inp_xmax)
+    inp_npoint = lines[1].split()[2]
+    npoint = float(inp_npoint)
+    inp_firsteval = lines[2].split()[0]
+    firsteval = float(inp_firsteval)
+    inp_lasteval = lines[2].split()[1]
+    lasteval = float(inp_lasteval)
+    interpoltype = lines[3].split()[0]
+    inp_nrinterpolpoints = lines[4].split()[0]
+    nrinterpolpoints = float(inp_nrinterpolpoints)
+    len_pot = len(lines)-5
+    xpot = np.zeros(len_pot)
+    ypot = np.zeros(len_pot)
+    for ll in range(5, len_pot+5):
+        xpot[ll - 5] = float(lines[ll].split()[0])
+        ypot[ll - 5] = float(lines[ll].split()[1])
+    inp_all().close()
 
-"""import parameters from input file"""
+    # potential interpolation
+    if interpoltype == 'linear':
+        xx = np.linspace(xmin, xmax, npoint)
+        yy = np.interp(xx, xpot, ypot)
+    elif interpoltype == 'polynomial':
+        degree = nrinterpolpoints - 1
+        polycoef = np.polyfit(xpot, ypot, degree)
+        func = np.poly1d(polycoef)
+        xx = np.linspace(xmin, xmax, npoint)
+        yy = func(xx)
+    elif interpoltype == 'cspline':
+        cubfunc = np.interp1d(xpot, ypot, kind='cubic')
+        xx = np.linspace(xmin, xmax, npoint)
+        yy = cubfunc(xx)
+    else:
+        print('interpolation type not found')
 
+    # put values for xPot and yPot into potential.dat file
+    xy = np.array([xx, yy])
+    data = xy.T
+    np.savetxt('potential.dat', data)
+    hh = abs((xmax-xmin)/npoint)
 
-lines = input_schroed(fname).readlines()
-inp_mass = lines[0].split()[0]
-mass = float(inp_mass)
-inp_xMin = lines[1].split()[0]
-xMin = float(inp_xMin)
-inp_xMax = lines[1].split()[1]
-xMax = float(inp_xMax)
-inp_nPoint = lines[1].split()[2]
-nPoint = float(inp_nPoint)
-inp_firsteigval = lines[2].split()[0]
-firsteigval = float(inp_firsteigval)
-inp_lasteigval = lines[2].split()[1]
-lasteigval = float(inp_lasteigval)
-interpoltype = lines[3].split()[0]
-inp_nrinterpolpoints = lines[4].split()[0]
-nrinterpolpoints = float(inp_nrinterpolpoints)
+    # formulate matrix-problem for the discretised Schroedinger equation
+    nn = int(npoint)
+    aa = np.zeros((nn, nn))
+    bb = 1/(mass*hh*hh)
+    for ii in range(1, nn):
+        aa[ii, ii-1] = -bb/2
+    for ii in range(0, nn):
+        aa[ii, ii] = bb+yy[ii]
+    for ii in range(0, nn-1):
+        aa[ii, ii+1] = -bb/2
 
-len_pot = len(lines)-5
-xPot = np.zeros(len_pot)
-yPot = np.zeros(len_pot)
-for ll in range(5, len_pot+5):
-    xPot[ll - 5] = float(lines[ll].split()[0])
-    yPot[ll - 5] = float(lines[ll].split()[1])
-input_schroed(fname).close()
+    # compute eigenvalues and eigenvectors
+    ee, psi = scipy.linalg.eigh(aa)
 
+    # normalize wavefunctions
+    nn = int(npoint)
+    normpsi = np.zeros((nn, nn))
+    for ii in range(0, nn):
+        normpsi[ii] = 1/np.sqrt(hh)*psi[ii]
 
-"""potential interpolation"""
+    # save eigenvalues and eigenvector in file
+    np.savetxt("energies.dat", ee[int(firsteval-1):int(lasteval)])
+    wavefuncs = np.hstack((xx.reshape((-1, 1)), normpsi))
+    np.savetxt("wavefuncs.dat", wavefuncs[:, int(firsteval-1):int(lasteval+1)])
 
-
-if interpoltype == 'linear':
-    x = np.linspace(xMin, xMax, nPoint)
-    y = np.interp(x, xPot, yPot)
-elif interpoltype == 'polynomial':
-    degree = nrinterpolpoints - 1
-    polycoef = np.polyfit(xPot, yPot, degree)
-    func = np.poly1d(polycoef)
-    x = np.linspace(xMin, xMax, nPoint)
-    y = func(x)
-elif interpoltype == 'cspline':
-    cubfunc = np.interp1d(xPot, yPot, kind='cubic')
-    x = np.linspace(xMin, xMax, nPoint)
-    y = cubfunc(x)
-else:
-    print('interpolation type not found')
-
-
-"""put values for xPot and yPot into potential.dat file"""
-xy = np.array([x, y])
-data = xy.T
-np.savetxt('potential.dat', data)
-
-
-Delta = abs((xMax-xMin)/nPoint)
-
-
-def matrix_schroed(y):
-    """formulate matrix-problem for the discretised Schroedinger equation"""
-    N = int(nPoint)
-    A = np.zeros((N, N))
-    a = 1/(mass*Delta*Delta)
-
-    for ii in range(1, N):
-        A[ii, ii-1] = -a/2
-    for ii in range(0, N):
-        A[ii, ii] = a+y[ii]
-    for ii in range(0, N-1):
-        A[ii, ii+1] = -a/2
-
-    return A
-
-
-def solve_schroed(y):
-    """compute eigenvalues and eigenvectors"""
-    A = matrix_schroed(y)
-    E, psi = scipy.linalg.eigh(A)
-
-    return E, psi
-
-
-E, psi = solve_schroed(y)
-
-
-def norm_wavefuncs(psi):
-    """normalize wavefunctions by dividung with 1/Delta"""
-    N = int(nPoint)
-    normpsi = np.zeros((N, N))
-    for ii in range(0, N):
-            normpsi[ii] = 1/np.sqrt(Delta)*psi[ii]
-
-    return normpsi
-
-
-"""save eigenvalues and eigenvector in file"""
-normpsi = norm_wavefuncs(psi)
-np.savetxt("energies.dat", E[int(firsteigval-1):int(lasteigval)])
-wavefuncs = np.hstack((x.reshape((-1, 1)), normpsi))
-np.savetxt("wavefuncs.dat", wavefuncs[:, int(firsteigval-1):int(lasteigval+1)])
-
-
-def someshit(psi, x):
-    exp_value = np.zeros(int(lasteigval-firsteigval)+1)
-    exp_value_sq = np.zeros(int(lasteigval-firsteigval)+1)
-    uncert_x = np.zeros(int(lasteigval-firsteigval)+1)
-    for ii in range(int(lasteigval-firsteigval)+1):
-        exp_value[ii] = Delta*np.sum(normpsi[ii]*x*normpsi[ii])
-        exp_value_sq[ii] = Delta*np.sum(normpsi[ii]*x*x*normpsi[ii])
+    # compute expectation values and uncertainty for the position
+    exp_value = np.zeros(int(lasteval-firsteval)+1)
+    exp_value_sq = np.zeros(int(lasteval-firsteval)+1)
+    uncert_x = np.zeros(int(lasteval-firsteval)+1)
+    for ii in range(int(lasteval-firsteval)+1):
+        exp_value[ii] = hh*np.sum(normpsi[ii]*xx*normpsi[ii])
+        exp_value_sq[ii] = hh*np.sum(normpsi[ii]*xx*xx*normpsi[ii])
         uncert_x[ii] = np.sqrt(exp_value_sq[ii]-exp_value[ii]*exp_value[ii])
 
-    return exp_value, exp_value_sq, uncert_x
-
-
-exp_value, exp_value_sq, uncert_x = someshit(psi, x)
-someshittyshit = np.array([exp_value, uncert_x])
-fuckshit = someshittyshit.T
-np.savetxt("expvalues.dat", fuckshit)
+    # save expectation values and uncertainty for the position in file
+    expvalues = np.array([exp_value, uncert_x])
+    datexpvalues = expvalues.T
+    np.savetxt("expvalues.dat", datexpvalues)
