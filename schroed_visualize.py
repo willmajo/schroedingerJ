@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Aug 24 12:59:12 2018
-
-@author: isi
+Visualize the data from the outputfiles for Schroedinger equation
 """
 
 import os.path
@@ -12,7 +10,18 @@ import matplotlib.pyplot as plt
 
 
 def visualize(direc, bulge_factor, lim_x, lim_y):
-    """visualize solution for schroedinger equation"""
+    """Read data from outputfiles and create plots for potential, eigenvalues,
+    wavefunctions, expactation values and uncertainty for the position.
+
+    Args:
+        direc: directory of the outputfiles
+        bulge_factor: bulge amplitude of the wavefunctions
+        lim_x: set the limits for the x-axis with additional summand
+        lim_y: set the limits for the y-axis with additional summand
+
+    Returns:
+
+    """
     # load data files
     xx = np.loadtxt(os.path.join(direc, "potential.dat"))[:, 0]
     potential = np.loadtxt(os.path.join(direc, "potential.dat"))[:, 1]
