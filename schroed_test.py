@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Test interpolated potential and energies with reference data
-"""
+"""Test interpolated potential and energies with reference data"""
 
 import os.path
 import pytest
