@@ -2,8 +2,8 @@
 Schroedinger_solver API
 ***********************
 
-.. automodule:: module.schroed_visualize
+.. automodule:: schroed_visualize
         :members:
 
-.. automodule:: module.schroed_solver
+.. automodule:: schroed_solver
         :members:

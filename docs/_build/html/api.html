@@ -41,12 +41,12 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-module.schroed_visualize">
-<span id="schroedinger-solver-api"></span><h1>Schroedinger_solver API<a class="headerlink" href="#module-module.schroed_visualize" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-schroed_visualize">
+<span id="schroedinger-solver-api"></span><h1>Schroedinger_solver API<a class="headerlink" href="#module-schroed_visualize" title="Permalink to this headline">¶</a></h1>
 <p>Visualize the data from the outputfiles for Schroedinger equation.</p>
 <dl class="function">
-<dt id="module.schroed_visualize.visualize">
-<code class="descclassname">module.schroed_visualize.</code><code class="descname">visualize</code><span class="sig-paren">(</span><em>direc</em>, <em>bulge_factor</em>, <em>lim_x</em>, <em>lim_y</em><span class="sig-paren">)</span><a class="headerlink" href="#module.schroed_visualize.visualize" title="Permalink to this definition">¶</a></dt>
+<dt id="schroed_visualize.visualize">
+<code class="descclassname">schroed_visualize.</code><code class="descname">visualize</code><span class="sig-paren">(</span><em>direc</em>, <em>bulge_factor</em>, <em>lim_x</em>, <em>lim_y</em><span class="sig-paren">)</span><a class="headerlink" href="#schroed_visualize.visualize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read data from outputfiles and create plots for potential, eigenvalues,
 wavefunctions, expactation values and uncertainty for the position.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -66,11 +66,11 @@ wavefunctions, expactation values and uncertainty for the position.</p>
 <p>Returns:</p>
 </dd></dl>
 
-<span class="target" id="module-module.schroed_solver"></span><p>Solver for the one-dimensional time-independent Schroedinger equation for
+<span class="target" id="module-schroed_solver"></span><p>Solver for the one-dimensional time-independent Schroedinger equation for
 any potential which can be read from an input file</p>
 <dl class="function">
-<dt id="module.schroed_solver.solver">
-<code class="descclassname">module.schroed_solver.</code><code class="descname">solver</code><span class="sig-paren">(</span><em>direc</em><span class="sig-paren">)</span><a class="headerlink" href="#module.schroed_solver.solver" title="Permalink to this definition">¶</a></dt>
+<dt id="schroed_solver.solver">
+<code class="descclassname">schroed_solver.</code><code class="descname">solver</code><span class="sig-paren">(</span><em>direc</em><span class="sig-paren">)</span><a class="headerlink" href="#schroed_solver.solver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import parameters from an input file and solve the one-dimensional
 time-independent Schroedinger equation. The potential will be interpolated
 and a matrix for the discretised problem will be solved to receive the
