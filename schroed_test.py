@@ -14,12 +14,12 @@ from schroed_solver import solver
 
 # creat parametrized tests for potenial and energies of every input example
 @pytest.mark.parametrize("direc", [
-    ("/Users/isi/Desktop/schroedinger_project/inputdata/asym_potential_well"),
-    ("/Users/isi/Desktop/schroedinger_project/inputdata/potential_well"),
-    ("/Users/isi/Desktop/schroedinger_project/inputdata/infinit_potential_well"),
-    ("/Users/isi/Desktop/schroedinger_project/inputdata/harm_osz"),
-    ("/Users/isi/Desktop/schroedinger_project/inputdata/double_potential_well"),
-    ("/Users/isi/Desktop/schroedinger_project/inputdata/double_potential_wellc")])
+    ("./inputdata/asym_potential_well"),
+    ("./inputdata/potential_well"),
+    ("./inputdata/infinit_potential_well"),
+    ("./inputdata/harm_osz"),
+    ("./inputdata/double_potential_well"),
+    ("./inputdata/double_potential_well_cubic")])
 def test_function(direc):
     """test interpolated discretised potential and energies"""
     # import values for potential and energy from the solver
