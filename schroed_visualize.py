@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Visualize the data from the outputfiles for Schroedinger equation
-"""
+"""Visualize the data from the outputfiles for Schroedinger equation."""
 
 import os.path
 import numpy as np
@@ -20,7 +18,6 @@ def visualize(direc, bulge_factor, lim_x, lim_y):
         lim_y: set the limits for the y-axis with additional summand
 
     Returns:
-
     """
     # load data files
     xx = np.loadtxt(os.path.join(direc, "potential.dat"))[:, 0]
