@@ -1,0 +1,141 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Schroedinger_solver API &#8212; Schroedinger_solver 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User manual for Schroedinger_solver" href="readme.html" />
+    <link rel="prev" title="Schroedinger_solver" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-module.schroed_visualize">
+<span id="schroedinger-solver-api"></span><h1>Schroedinger_solver API<a class="headerlink" href="#module-module.schroed_visualize" title="Permalink to this headline">¶</a></h1>
+<p>Visualize the data from the outputfiles for Schroedinger equation.</p>
+<dl class="function">
+<dt id="module.schroed_visualize.visualize">
+<code class="descclassname">module.schroed_visualize.</code><code class="descname">visualize</code><span class="sig-paren">(</span><em>direc</em>, <em>bulge_factor</em>, <em>lim_x</em>, <em>lim_y</em><span class="sig-paren">)</span><a class="headerlink" href="#module.schroed_visualize.visualize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read data from outputfiles and create plots for potential, eigenvalues,
+wavefunctions, expactation values and uncertainty for the position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>direc</strong> – directory of the outputfiles</li>
+<li><strong>bulge_factor</strong> – bulge amplitude of the wavefunctions</li>
+<li><strong>lim_x</strong> – set the limits for the x-axis with additional summand</li>
+<li><strong>lim_y</strong> – set the limits for the y-axis with additional summand</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns:</p>
+</dd></dl>
+
+<span class="target" id="module-module.schroed_solver"></span><p>Solver for the one-dimensional time-independent Schroedinger equation for
+any potential which can be read from an input file</p>
+<dl class="function">
+<dt id="module.schroed_solver.solver">
+<code class="descclassname">module.schroed_solver.</code><code class="descname">solver</code><span class="sig-paren">(</span><em>direc</em><span class="sig-paren">)</span><a class="headerlink" href="#module.schroed_solver.solver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import parameters from an input file and solve the one-dimensional
+time-independent Schroedinger equation. The potential will be interpolated
+and a matrix for the discretised problem will be solved to receive the
+eigenvalues and wavefunctions. The wavefunctions will be normed and from
+that, the expectation values and the uncertainty for the position will be
+calculated. All results will be saved in .dat files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>direc</strong> – directory of the inputfiles</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">array with x- and y-values of the interpolated potential
+energy: array with the eigenvalues for the matrix of the problem</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">xypotential</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Schroedinger_solver</a></li>
+      <li>Next: <a href="readme.html" title="next chapter">User manual for Schroedinger_solver</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Isabell Hüllen and Jonas Willmann.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
