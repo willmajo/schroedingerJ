@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Executable file which contains solver and visualizer
-"""
+"""Executable file which contains solver and visualizer"""
 
 import schroed_solver
 import schroed_visualize
