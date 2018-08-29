@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-"""
-Solver for the one-dimensional time-independent Schroedinger equation for any
-potential which can be read from an input file
-"""
+"""Solver for the one-dimensional time-independent Schroedinger equation for
+any potential which can be read from an input file"""
 
 import os.path
 import sys
