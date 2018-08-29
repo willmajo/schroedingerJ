@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-Created on Fri Aug 24 16:52:05 2018
-
-@author: jonaswillmann
+Solver for the one-dimensional time-independent Schroedinger equation for any
+potential which can be read from an input file
 """
 
 import os.path
@@ -14,14 +12,27 @@ from scipy.interpolate import interp1d
 
 
 def solver(direc):
-    '''import parameters and solve the one-dimensional time-independent
-    Schrödinger equation'''
-    # import input file and test if file exists
+    """Import parameters from an input file and solve the one-dimensional
+    time-independent Schroedinger equation. The potential will be interpolated
+    and a matrix for the discretised problem will be solved to receive the
+    eigenvalues and wavefunctions. The wavefunctions will be normed and from
+    that, the expectation values and the uncertainty for the position will be
+    calculated. All results will be saved in .dat files.
+
+    Args:
+        direc: directory of the inputfiles
+
+    Returns:
+        xypotential: array with x- and y-values of the interpolated potential
+        energy: array with the eigenvalues for the matrix of the problem
+    """
+
+    # open inputfile
     file = 'schroedinger.inp'
     fn = os.path.join(direc, file)
     inp_all = open(fn, 'r')
 
-    # import parameters from input file
+    # read parameters from inputfile
     lines = inp_all.readlines()
     inp_mass = lines[0].split()[0]
     mass = float(inp_mass)
@@ -45,7 +56,7 @@ def solver(direc):
         xpot[ii - 5] = float(lines[ii].split()[0])
         ypot[ii - 5] = float(lines[ii].split()[1])
 
-    # read interpolation type and use interpolation for potential
+    # read interpolation type and interpolate the potential
     xx = np.linspace(xmin, xmax, npoint)
     if interpoltype == 'linear':
         pot = np.interp(xx, xpot, ypot)
@@ -61,7 +72,7 @@ def solver(direc):
         print('interpolation type not found')
         sys.exit(1)
 
-    # write values for xPot and yPot into potential.dat file
+    # save x- and y-values for interpolated potential in potential.dat file
     potential = np.array([xx, pot])
     xypotential = potential.T
     np.savetxt(os.path.join(direc, 'potential.dat'), xypotential)
