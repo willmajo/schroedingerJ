@@ -108,4 +108,4 @@ def solver(direc):
     datexpvalues = expvalues.T
     np.savetxt(os.path.join(direc, 'expvalues.dat'), datexpvalues)
 
-    return(xypotential, energy)
+    return xypotential, energy
