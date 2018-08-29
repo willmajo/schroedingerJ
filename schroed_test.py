@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Aug 27 14:20:57 2018
-
-@author: isi
+Test interpolated potential and energies with reference data
 """
 
 import os.path
@@ -21,7 +19,15 @@ from schroed_solver import solver
     ("./inputdata/double_potential_well"),
     ("./inputdata/double_potential_well_cubic")])
 def test_function(direc):
-    """test interpolated discretised potential and energies"""
+    """Read data form reference files and outputfiles, and compare them with
+    each other.
+
+    Args:
+        direc: directory of the outputfiles and reference files
+
+    Returns:
+
+    """
     # import values for potential and energy from the solver
     xypotential, energy = solver(direc)
 
