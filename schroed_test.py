@@ -8,7 +8,7 @@ import numpy as np
 from schroed_solver import solver
 
 
-# creat parametrized tests for potenial and energies of every input example
+# creat parametrized tests for potential of every input example
 @pytest.mark.parametrize("direc", [
     ("./inputdata/asym_potential_well"),
     ("./inputdata/potential_well"),
@@ -44,6 +44,14 @@ def test_potential(direc):
     assert np.all(np.abs(refpotential - xypotential) < 1e-10)
 
 
+# creat parametrized tests for energy of every input example
+@pytest.mark.parametrize("direc", [
+    ("./inputdata/asym_potential_well"),
+    ("./inputdata/potential_well"),
+    ("./inputdata/infinit_potential_well"),
+    ("./inputdata/harm_osz"),
+    ("./inputdata/double_potential_well"),
+    ("./inputdata/double_potential_well_cubic")])
 def test_energy(direc):
     """Read data for energy from reference files and outputfiles, and
     compare them with each other.
@@ -69,4 +77,4 @@ def test_energy(direc):
         refenergies[ii] = float(linesener[ii].split()[0])
 
     # checks whether reference and calculated values are the same
-    assert np.all(np.abs(refenergies - energy) < 1e-10)
+    assert np.all(np.abs(refenergies - energy) < 1e-2)
