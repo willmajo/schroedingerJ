@@ -16,9 +16,9 @@ from schroed_solver import solver
     ("./inputdata/harm_osz"),
     ("./inputdata/double_potential_well"),
     ("./inputdata/double_potential_well_cubic")])
-def test_function(direc):
-    """Read data form reference files and outputfiles, and compare them with
-    each other.
+def test_potential(direc):
+    """Read data for potential from reference files and outputfiles, and
+    compare them with each other.
 
     Args:
         direc: directory of the outputfiles and reference files
@@ -26,8 +26,8 @@ def test_function(direc):
     Returns:
 
     """
-    # import values for potential and energy from the solver
-    xypotential, energy = solver(direc)
+    # import values for potential from the solver
+    xypotential = solver(direc)[0]
 
     # open reference data for the potential
     filepot = open(os.path.join(direc, 'ref_potential.dat'), "r")
@@ -42,6 +42,21 @@ def test_function(direc):
 
     # checks whether reference and calculated values are the same
     assert np.all(np.abs(refpotential - xypotential) < 1e-10)
+
+
+def test_energy(direc):
+    """Read data for energy from reference files and outputfiles, and
+    compare them with each other.
+
+    Args:
+        direc: directory of the outputfiles and reference files
+
+    Returns:
+
+    """
+
+    # import values for energy from the solver
+    energy = solver(direc)[1]
 
     # open reference data for the energy
     fileener = open(os.path.join(direc, 'ref_energies.dat'), "r")
