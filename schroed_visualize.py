@@ -31,19 +31,17 @@ def _visualize(direc, bulge_factor, lim_x, lim_y):
     plt.subplot(1, 2, 1)
     plt.plot(xx, potential, color="black")
 
-    bf = bulge_factor
-    limx = lim_x
-    limy = lim_y
     for ii in range(0, int(len(energy))):
-        energy = np.linspace(energy[ii], energy[ii], len(xx))
-        plt.plot(xx, energy, color="gray")
-        plt.plot(expvalues, energy, "xg")
+        energies = np.linspace(energy[ii], energy[ii], len(xx))
+        plt.plot(xx, energies, color="gray")
+        plt.plot(expvalues[ii], energy[ii], "xg")
         if ii % 2 == 0:
-            plt.plot(xx, bf*wavefuncs[:, ii]+energy[ii], color="blue")
+            plt.plot(xx, bulge_factor*wavefuncs[:, ii]+energy[ii],
+                     color="blue")
         else:
-            plt.plot(xx, bf*wavefuncs[:, ii]+energy[ii], color="red")
-    plt.xlim(xx.min() - limx, xx.max() + limx)
-    plt.ylim(potential.min() - limy, energy.max() + limy)
+            plt.plot(xx, bulge_factor*wavefuncs[:, ii]+energy[ii], color="red")
+    plt.xlim(xx.min() - lim_x, xx.max() + lim_x)
+    plt.ylim(potential.min() - lim_y, energy.max() + lim_y)
     plt.xlabel("$x$ [Bohr]")
     plt.ylabel("Energy [Hartree]")
     plt.title("Potential, eigenstates, ($x$)")
@@ -51,12 +49,12 @@ def _visualize(direc, bulge_factor, lim_x, lim_y):
     # plotting energies and uncertainty
     plt.subplot(1, 2, 2)
     for ii in range(0, int(len(energy))):
-        energy = np.linspace(energy[ii], energy[ii], len(xx))
-        plt.plot(xx, energy, color="gray")
-        plt.plot(uncertainty, energy, "+m")
+        energies = np.linspace(energy[ii], energy[ii], len(xx))
+        plt.plot(xx, energies, color="gray")
+        plt.plot(uncertainty[ii], energy[ii], "+m")
         plt.yticks([])
-    plt.xlim(0, uncertainty.max() + limx)
-    plt.ylim(potential.min() - limy, energy.max() + limy)
+    plt.xlim(0, uncertainty.max() + lim_x)
+    plt.ylim(potential.min() - lim_y, energy.max() + lim_y)
     plt.xlabel("[Bohr]")
     plt.title("$\sigma_\mathrm{x}$")
 
