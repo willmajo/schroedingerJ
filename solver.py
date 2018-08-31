@@ -9,8 +9,8 @@ parser = argparse.ArgumentParser(description='Executes solver for the\
                                               Schroedinger equation')
 
 msg_direc = 'Set directory of the figures\
-    (default value: .)'
-parser.add_argument('-d', '--directory', default='.',
+    (default value: ./inputdata/potential_well)'
+parser.add_argument('-d', '--directory', default='./inputdata/potential_well',
                     help=msg_direc)
 
 args = parser.parse_args()
