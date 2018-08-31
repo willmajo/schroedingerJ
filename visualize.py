@@ -10,8 +10,8 @@ parser = argparse.ArgumentParser(description='Visualizes solution of the\
                                  solver')
 
 msg_direc = 'Set directory of the figures\
-    (default value: .)'
-parser.add_argument('-d', '--directory', default='.',
+    (default value: ./inputdata/potential_well)'
+parser.add_argument('-d', '--directory', default='./inputdata/potential_well',
                     help=msg_direc)
 
 msg_bulge_factor = 'Set bulge factor for the wavefuncs\
