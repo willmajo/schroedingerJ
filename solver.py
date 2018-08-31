@@ -5,15 +5,15 @@
 import argparse
 from schroed_solver import solver
 
-parser = argparse.ArgumentParser(description='Executes solver for the\
+PARSER = argparse.ArgumentParser(description='Executes solver for the\
                                               Schroedinger equation')
 
-msg_direc = 'Set directory of the figures\
+MSG = 'Set directory of the figures\
     (default value: ./inputdata/potential_well)'
-parser.add_argument('-d', '--directory', default='./inputdata/potential_well',
-                    help=msg_direc)
+PARSER.add_argument('-d', '--directory', default='./inputdata/potential_well',
+                    help=MSG)
 
-args = parser.parse_args()
-print("Directory: {}".format(args.directory))
+ARGS = PARSER.parse_args()
+print("Directory: {}".format(ARGS.directory))
 
-solver(args.directory)
+solver(ARGS.directory)
