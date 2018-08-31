@@ -15,19 +15,12 @@ User manual for Schroedinger_solver
 
 3. Save inputfile as schroedinger.inp in a new directory in the directory inputdata.
 
-3. Choose the directory and set the parameters for the illustration in schroedinger.py
-    set options: 
-                 * direc = directory of the inputfile
-                 * bulge_factor = bulge amplitude of the wavefunctions
-                 * lim_x = set the limits for the x-axis with additional summand
-                 * lim_y = set the limits for the y-axis with additional summand
-
 4. Execute ./solver.py to solve the Schroedinger equation. Choose the directory with your 
    inputfile with the -d argument. The resualts will be saved in that directory as .dat files.
 
 5. Execute ./visualize.py to illustrate the results. Choose the directory with your results
    with the -d argument. For a better illustration, set the following options as floats:
-                 * -bf = --bulge_factor: bulge amplitude of the wavefunctions 
-                 * -xl = --lim_x: set the limits for the x-axis with additional summand
-                 * -yl = --lim_y: set the limits for the y-axis with additional summand
+      * -bf = --bulge_factor: bulge amplitude of the wavefunctions 
+      * -xl = --lim_x: set the limits for the x-axis with additional summand
+      * -yl = --lim_y: set the limits for the y-axis with additional summand
    The illustration will be saved in the directory as solution_schroedinger.pdf.
